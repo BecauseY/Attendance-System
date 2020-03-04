@@ -1,0 +1,72 @@
+﻿<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <!--link rel="Bookmark" href="/favicon.ico">
+    <link rel="Shortcut Icon" href="/favicon.ico"/-->
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="{{ url_for('static',filename='lib/html5shiv.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='lib/respond.min.js') }}"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='h-ui/css/H-ui.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='h-ui.admin/css/H-ui.admin.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='lib/Hui-iconfont/1.0.8/iconfont.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='h-ui.admin/skin/default/skin.css') }}" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='h-ui.admin/css/style.css') }}"/>
+    <!--[if IE 6]>
+    <script type="text/javascript" src="{{ url_for('static',filename='lib/DD_belatedPNG_0.0.8a-min.js') }}"></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <title>后台管理系统 v1.0.0</title>
+</head>
+<body>
+<header class="navbar-wrapper">
+    <div class="navbar navbar-fixed-top">
+        <div class="container-fluid cl"><span class="logo navbar-logo f-l mr-10 hidden-xs">后台管理系统</span>
+            <span class="logo navbar-slogan f-l mr-10 hidden-xs">v1.0.0</span>
+            <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
+            <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
+                <!--ul class="cl">
+                    <li><a href="javascript:;" onclick="logout()">退出</a></li>
+                </ul-->
+            </nav>
+        </div>
+    </div>
+</header>
+<aside class="Hui-aside">
+    <div class="menu_dropdown bk_2" id="menu">
+        <ul>
+            <li><a data-href="{{ url_for('static',filename='set_signin.html') }}" data-title="签到设置"  href="/admin/set_signin" target="i_frame">签到设置</a></li>
+            <li><a data-href="{{ url_for('static',filename='check_signin.html') }}" data-title="查看签到情况" href="/admin/checksignin" target="i_frame">查看签到情况</a></li>
+            <li><a data-href="{{ url_for('static',filename='user_info.html') }}" data-title="更改用户信息" href="/admin/userinfo" target="i_frame">更改用户信息</a></li>
+            <li><a data-href="{{ url_for('static',filename='message_list.html') }}" data-title="消息列表" href="/admin/messagelist" target="i_frame">消息列表</a></li>
+        </ul>
+    </div>
+</aside>
+<!--div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a>
+</div-->
+<section class="Hui-article-box">
+    <div name="iframe_box" class="Hui-article">
+        <div class="show_iframe">
+            <div style="display:none" class="loading"></div>
+            <iframe scrolling="yes" frameborder="0" src="/admin/set_signin" name="i_frame"></iframe>
+        </div>
+    </div>
+</section>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="{{ url_for('static',filename='lib/jquery/1.9.1/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='lib/layer/2.4/layer.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='h-ui/js/H-ui.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='h-ui.admin/js/H-ui.admin.js') }}"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="{{ url_for('static',filename='lib/jquery.contextmenu/jquery.contextmenu.r2.js') }}"></script>
+
+</body>
+</html>

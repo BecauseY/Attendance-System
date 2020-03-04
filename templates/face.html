@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ZH-CN">
+<head>
+  <meta charset="utf-8">
+  <title>人脸认证</title>
+  <script src='{{ url_for("static", filename = "js/vendor/jquery-1.11.2.min.js") }}'></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename = 'css/pushy-buttons.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename = 'css/style.css') }}">
+
+
+  <style>
+    .booth {
+      width:400px;
+      background:#ccc;
+      border: 10px solid #ddd;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="booth">
+    <video id="video" width="400" height="300" ></video>
+    <button id='tack' class="btn btn--df btn--red"> 拍照</button>
+    <canvas id='canvas' width='400' height='300'class="col-md-5"></canvas>
+
+  </div>
+
+
+  <script>
+          function convertBase64UrlToBlob(urlData){
+
+        var bytes=window.atob(urlData.split(',')[1]);        //去掉url的头，并转换为byte
+
+        //处理异常,将ascii码小于0的转换为大于0
+        var ab = new ArrayBuffer(bytes.length);
+        var ia = new Uint8Array(ab);
+        for (var i = 0; i < bytes.length; i++) {
+            ia[i] = bytes.charCodeAt(i);
+        }
+
+        return new Blob( [ab] , {type : 'image/jpeg'});
+    }
+
+    var video = document.getElementById('video'),
+        canvas = document.getElementById('canvas'),
+        snap = document.getElementById('tack'),
+        img = document.getElementById('img'),
+        vendorUrl = window.URL || window.webkitURL;
+
+    //媒体对象
+    navigator.getMedia = navigator.getUserMedia ||
+                         navagator.webkitGetUserMedia ||
+                         navigator.mozGetUserMedia ||
+                         navigator.msGetUserMedia;
+    navigator.getMedia({
+        video: true, //使用摄像头对象
+        audio: false  //不适用音频
+    }, function(strem){
+        console.log(strem);
+        video.src = vendorUrl.createObjectURL(strem);
+        video.play();
+    }, function(error) {
+        //error.code
+        console.log(error);
+    });
+    snap.addEventListener('click', function(){
+
+        //绘制canvas图形
+        canvas.getContext('2d').drawImage(video, 0, 0, 400, 300);
+
+        //把canvas图像转为img图片
+        var picture=canvas.toDataURL('image/png');
+        var data1 = picture.substr(22);
+
+        var data={
+            "data2":data1
+        };
+        $.ajax({
+            type:'post',
+            url:'/check',
+            data:JSON.stringify(data),
+            dataType:'json',
+            contentType:'application/json',
+            success:function (status) {
+                if (status["yesorno"]=="yes") {
+                  alert('人脸认证成功，即将跳转到主界面！');
+                window.location.href="../index";
+                }
+                else {
+                  alert('人脸认证失败，即将返回到登陆界面！');
+                  window.location.href="../";
+                }
+            },
+            error:function () {
+                alert('未检测到人脸，请重新拍照！')
+            }
+
+        });
+
+    })
+  </script>
+</body>
+</html>

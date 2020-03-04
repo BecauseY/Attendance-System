@@ -1,0 +1,150 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息</title>
+	<style>
+        #section {
+            #margin-top:10px;
+            margin-left:100px;
+            margin-right:100px;
+            border:0px solid #000;
+            }
+        #section2 {
+            margin-top:0px;
+            overflow-x:auto;
+            height:200px;
+            }
+    </style>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static',filename='js/pagination.js') }}"></script>
+	<script type="text/javascript">
+        function show(){
+            //切换添加表单
+            var display=document.getElementById("add");
+            if(display.style.display=="block"){
+                display.style.display="none";
+            }else{
+                display.style.display="block";
+            }
+         }
+    </script>
+    <script type="text/javascript">
+        //全局变量
+        var numCount;       //数据总数量
+        var columnsCounts;  //数据列数量
+        var pageCount;      //每页显示的数量
+        var pageNum;        //总页数
+        var currPageNum ;   //当前页数
+        //页面标签变量
+        var blockTable;
+        var preSpan;
+        var firstSpan;
+        var nextSpan;
+        var lastSpan;
+        var pageNumSpan;
+        var currPageSpan;
+        $(document).ready(function(){
+            //页面标签变量
+            blockTable = document.getElementById("blocks1");
+            preSpan = document.getElementById("spanPre");
+            firstSpan = document.getElementById("spanFirst");
+            nextSpan = document.getElementById("spanNext");
+            lastSpan = document.getElementById("spanLast");
+            pageNumSpan = document.getElementById("spanTotalPage");
+            currPageSpan = document.getElementById("spanPageNum");
+            numCount = document.getElementById("blocks1").rows.length - 1;       //取table的行数作为数据总数量（减去标题行1）
+            columnsCounts = blockTable.rows[0].cells.length;
+            pageCount = 5;
+            pageNum = parseInt(numCount/pageCount);
+            if(0 != numCount%pageCount){
+                pageNum += 1;
+            }
+            firstPage();
+        });
+    </script>
+    <script>
+    {{ alert|safe }}
+    </script>
+    <script type="text/javascript" >
+    function $(id) {
+        return document.getElementById(id);
+        }
+    function edit(rowIndex) {
+        var rowHtml = $("blocks1").rows[rowIndex];
+        rowHtml.cells[0].innerHTML = "<input type='text' style='width:80px' value='"+rowHtml.cells[0].innerText+"' name='name'>";
+        rowHtml.cells[1].innerHTML = "<input type='text' style='width:120px' value='"+rowHtml.cells[1].innerText+"' name='"+rowHtml.cells[1].innerText+"'>";
+        rowHtml.cells[2].innerHTML = "<input type='text' style='width:80px' value='"+rowHtml.cells[2].innerText+"' name='gender'>";
+        rowHtml.cells[3].innerHTML = "<input type='date' style='width:80px' value='"+rowHtml.cells[3].innerText+"' name='birth'>";
+        rowHtml.cells[4].innerHTML = "<input type='text' style='width:220px' value='"+rowHtml.cells[4].innerText+"' name='address'>";
+        rowHtml.cells[5].innerHTML = "<input type='text' style='width:80px' value='"+rowHtml.cells[5].innerText+"' name='position'>";
+        rowHtml.cells[6].innerHTML = "<input type='text' style='width:130px' value='"+rowHtml.cells[6].innerText+"' name='password'>";
+        rowHtml.cells[7].innerHTML = "<input style='width:50px' type='file' name ='pic1'>";
+        rowHtml.cells[8].innerHTML = "<input style='width:45px' type='submit' value='保存' name='save' >";
+    }
+    </script>
+</head>
+<body background="{{ url_for('static',filename='images/background1.jpg') }}" >
+<div>
+    <div id="section" style="overflow-x:auto; height:300px; margin-top:50px">   <!--高度和滑轮不可兼得？-->
+        <form action="/admin/userinfo/save/" method="post" name="wwww" enctype = "multipart/form-data">
+        <table border="1" id="blocks1">
+            <thead>
+                <tr bgcolor="#D1EEEE">
+                    <td style="text-align:center; font-weight:bold; ">姓名</td>
+                    <td style="text-align:center; font-weight:bold; ">工号</td>
+					<td style="text-align:center; font-weight:bold; ">性别</td>
+					<td style="text-align:center; font-weight:bold; ">出生日期</td>
+                    <td style="text-align:center; font-weight:bold; ">家庭住址</td>
+                    <td style="text-align:center; font-weight:bold; ">职位</td>
+                    <td style="text-align:center; font-weight:bold; ">密码</td>
+                    <td style="text-align:center; font-weight:bold; ">照片</td>
+                    <td style="text-align:center; font-weight:bold; ">操作</td>
+                </tr>
+            </thead>
+            <tbody>
+			{% for i in u %}
+            <tr id="tb">
+					<td width="100px" height="30px" name="name"> {{ i[0] }} </td>
+                    <td width="200px" height="30px" name="name_id"> {{ i[1] }} </td>
+					<td width="100px" height="30px" name="gender"> {{ i[2] }} </td>
+					<td width="150px" height="30px" name="birth"> {{ i[3] }} </td>
+                    <td width="400px" height="30px" name="address"> {{ i[4] }} </td>
+                    <td width="100px" height="30px" name="position"> {{ i[5] }} </td>
+                    <td width="200px" height="30px" name="password"> {{ i[6] }} </td>
+                    <td width="60px" height="30px" name="pic"> <img alt="点击查看大图" src="{{ url_for('static',filename=i[7]) }}" height="30" width="30"/> </td>
+                    <td height="30px" width="60px"><button  href="#" onclick="edit(this.parentNode.parentNode.rowIndex)">修改</button></td>
+            </tr>
+			{% endfor %}
+            </tbody>
+        </table>
+        </form>
+    </div>
+    <div id="pagiDiv" align="center" style="width:1200px">
+        <span id="spanFirst">First</span>
+        <span id="spanPre">Pre</span>
+        <span id="spanNext">Next</span>
+        <span id="spanLast">Last</span>
+        The <span id="spanPageNum"></span> Page/Total <span id="spanTotalPage"></span> Page
+    </div>
+    <div style="margin-left:100px; margin-top:50px">
+        <form method="post" action="/admin/userinfo/delete/">
+            要删除的员工工号：&nbsp&nbsp<input type="text" name="del"><input type="submit" value="删除">
+        </form>
+        <tr><td><input type="submit" value="添加员工信息" onclick="show()"/></td></tr>
+        <form  id="userinfo" method="post" name="userinfo" action="/admin/userinfo/" enctype="multipart/form-data">
+            <table id="add" style="display:none; margin-top:10px">
+            <tr><td>姓名：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" name="name"/></td></tr>
+            <tr><td>工号：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" name="num"/></td></tr>
+            <tr><td>性别：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" name="gender"/></td></tr>
+            <tr><td>出生日期：<input type="text" name="birth"/></td></tr>
+            <tr><td>家庭住址：<input type="text"  name="home"/></td></tr>
+            <tr><td>职位：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text"  name="job"/></td></tr>
+            <tr><td>密码：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text"  name="pwd"/>&nbsp&nbsp&nbsp&nbsp
+            用户图片上传:&nbsp&nbsp<input type = "file" name = "pic" /></td></tr>
+            <tr><td><div style="margin-top:20px; margin-left:20px"><input type="submit" value="添加" style="height:30px;width:50px;display:inline-block;" id="submit1"></div></td></tr>
+            </table>
+        </form>
+    </div>
+</div>
+</body>
+</html>

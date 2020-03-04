@@ -1,0 +1,368 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>CI考勤</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>-->
+         <script>window.jQuery || document.write('<script src=\'{{ url_for("static", filename = "js/vendor/jquery-1.11.2.min.js") }}\'><\/script>')</script>
+        <script src="{{ url_for('static', filename = 'js/vendor/bootstrap.min.js') }}"></script>
+        <script src="{{ url_for('static', filename = 'js/datepicker.js') }}"></script>
+        <script src="{{ url_for('static', filename = 'js/plugins.js') }}"></script>
+        <script src="{{ url_for('static', filename = 'js/main.js') }}"></script>
+        <script src="{{ url_for('static', filename = 'js/form.js') }}"></script>
+
+        <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>-->
+
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'css/bootstrap-theme.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'css/fontAwesome.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'css/light-box.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'css/templatemo-main.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'css/newmain.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'css/pushy-buttons.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'css/style.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'css/test.css') }}">
+
+
+
+        <script src="{{ url_for('static', filename = 'js/vendor/modernizr-2.8.3-respond-1.4.2.min.js') }}"></script>
+        <script src="{{ url_for('static', filename = 'js/clock.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename = 'js/app.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename = 'js/rotate.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename = 'js/time.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename = 'js/date.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename = 'js/position.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename = 'js/zhuangtai.js') }}"></script>
+
+
+
+
+    </head>
+
+    <body style="height:790px;">
+
+        <div class="sequence">
+            <div class="seq-preloader">
+                <svg width="39" height="16" viewBox="0 0 39 16" xmlns="http://www.w3.org/2000/svg" class="seq-preload-indicator"><g fill="#F96D38"><path class="seq-preload-circle seq-preload-circle-1" d="M3.999 12.012c2.209 0 3.999-1.791 3.999-3.999s-1.79-3.999-3.999-3.999-3.999 1.791-3.999 3.999 1.79 3.999 3.999 3.999z"/><path class="seq-preload-circle seq-preload-circle-2" d="M15.996 13.468c3.018 0 5.465-2.447 5.465-5.466 0-3.018-2.447-5.465-5.465-5.465-3.019 0-5.466 2.447-5.466 5.465 0 3.019 2.447 5.466 5.466 5.466z"/><path class="seq-preload-circle seq-preload-circle-3" d="M31.322 15.334c4.049 0 7.332-3.282 7.332-7.332 0-4.049-3.282-7.332-7.332-7.332s-7.332 3.283-7.332 7.332c0 4.05 3.283 7.332 7.332 7.332z"/></g></svg>
+            </div>
+        </div>
+
+        <nav>
+          <div class="logo">
+            <h1>CI考勤</h1>
+          </div>
+            <div style="font-size: 20px;color: white;" id="username"></div>
+            <div style="font-size: 20px;color: white;" >欢迎你</div>
+          <ul>
+            <li><a href="#1"><i class="fa fa-user"></i> <em>签到</em></a></li>
+            <li><a href="#2"><i class="fa fa-home"></i> <em>签退</em></a></li>
+            <li><a href="#3"><i class="fa fa-pencil"></i> <em>申请</em></a></li>
+            <li><a href="#4"><i class="fa fa-bar-chart"></i> <em>个人记录</em></a></li>
+            <li><a href="#5"><i class="fa fa-comment"></i> <em>消息</em></a></li>
+
+          </ul>
+        </nav>
+
+        <div class="slides">
+          <div class="slide" id="1">
+            <div class="content second-content">
+              <div class="container-fluid">
+                  <div class="col-md-5">
+                      <div class="left-content">
+                          <div class="right-image">
+                          <img src="{{ url_for('static', filename = 'img/TIM.png') }}" alt="" height="172">
+                      </div>
+                       <h2>打卡签到</h2>
+                       <div>
+                   <p align="center">
+
+                       <button id="btqiandao" class="btn btn--lg btn--blue" onclick=sign_in()> 签到</button>
+
+                   </p>
+                    </div>
+                          <p id="zhuangtailan" class="nowtime" >签到状态：未签到</p>
+
+                          <div class="col-md-6">
+                           <div class="nowtime">打卡时间：</div>
+                              <div class="nowtime">打卡地点：</div>
+                          </div>
+
+                          <div class="col-md-6">
+                              <div id="time" class="nowtime"></div>
+                              <div id="myposition" class="nowtime"></div>
+                          </div>
+
+                      </div>
+                  </div>
+                   <div class="col-md-7">
+
+
+                       <iframe name="weather_inc" src="http://i.tianqi.com/index.php?c=code&id=2&num=4" width="550" height="70" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+
+                       <div class="box">
+                        <div class="clock" id="clock">
+                        <div class="clock-xin"></div>
+                        <div class="clock-xin2"></div>
+                        <div id="date" class="date"></div>
+                        <div id="hour" class="hour"></div>
+                        <div id="min" class="min"></div>
+                        <div id="sec" class="sec"></div>
+                        </div>
+                       </div>
+
+                   </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="slide" id="2">
+            <div class="content second-content">
+                <div class="container-fluid">
+                    <div class="col-md-5">
+                        <div class="left-content">
+                             <div class="right-image">
+                          <img src="{{ url_for('static', filename = 'img/TIM.png') }}" alt="" height="172">
+                      </div>
+                         <h2>打卡签退</h2>
+
+                          <div>
+                           <p align="center">
+
+                               <button id="btqiandao2" class="btn btn--lg btn--blue" onclick=sign_out()> 签退</button>
+
+                          </div>
+                          <p id="zhuangtailan2" class="nowtime" >签退状态：未签退</p>
+
+                          <div class="col-md-6">
+                           <div class="nowtime">打卡时间：</div>
+                              <div class="nowtime">打卡地点：</div>
+                          </div>
+
+                          <div class="col-md-6">
+                              <div id="time2" class="nowtime"></div>
+                              <div id="myposition2" class="nowtime"></div>
+
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <iframe name="weather_inc" src="http://i.tianqi.com/index.php?c=code&id=2&num=4" width="550" height="70" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+                        <p>&nbsp;</p>
+                        <p>&nbsp;</p>
+                       <div class="time-container">
+                            <div class="flex" id="time-hour">
+                                <div class="left"></div>
+                                <div class="right"></div>
+                                <div class="rotate">
+                                    <div class="rotate-part"></div>
+                                </div>
+                                <span class="time-text">23</span>
+                            </div>
+                            <div class="flex" id="time-minute">
+                                <div class="left"></div>
+                                <div class="right"></div>
+                                <div class="rotate">
+                                    <div class="rotate-part"></div>
+                                </div>
+                                <span class="time-text">12</span>
+                            </div>
+                            <div class="flex" id="time-sec">
+                                <div class="left"></div>
+                                <div class="right"></div>
+                                <div class="rotate">
+                                    <div class="rotate-part"></div>
+                                </div>
+                                <span class="time-text">12</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+          </div>
+
+          <div class="slide" id="3">
+            <div class="content third-content">
+                <div class="container-fluid">
+                    <h2 align="center">补签申请</h2>
+                    <form id="SQ" method="post" action="/message" onsubmit="return submitForm()">
+                        <div class="three-div">
+                            <b>申请类型：</b>
+                            <input type="radio" checked=""  name="leixing" value="buqian">补签
+                            <input type="radio" name="leixing" value="qingjia">请假
+                            <input type="radio" name="leixing" value="chuchai">出差
+                            <br>
+                            <b>申请时间：</b>
+                            <input type="date" style="background: #3c3c3c" name="shenqingshijian">
+                        </div>
+                        <div class="three-div">
+                            <b>申请理由：</b>
+                            <textarea  id="shenqingliyou" class="three-select" rows="10" cols="50" name="shenqingliyou"></textarea>
+                        </div>
+                        <div>
+                            <p>&nbsp;</p>
+                            <p align="center">
+                                <input id="bttijiao" class="btn btn--lg btn--blue" type="submit" value="提交">
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+          </div>
+
+          <div class="slide" id="4">
+            <div class="content fourth-content">
+                <div class="container-fluid">
+                    <div class="data-grid">
+                        <div class="data-view">
+                            <div class="grid-head">
+                                <div class="grid-head-inner">
+                                    <table class="data-table">
+                                        <tbody>
+                                        <tr class="data-table-row">
+                                         <td>
+                                             <div class="datagrid-cell cell-c7 ">
+                                                <div>日期</div>
+                                             </div>
+                                         </td>
+                                         <td>
+                                             <div class="datagrid-cell cell-c8 ">
+                                                <div>签到时间</div>
+                                             </div>
+                                         </td>
+                                         <td>
+                                              <div class="datagrid-cell cell-c8 ">
+                                                 <div>签退时间</div>
+                                              </div>
+                                          </td>
+                                         <td>
+                                             <div class="datagrid-cell cell-c7 ">
+                                                 <div>是否异常</div>
+                                             </div>
+                                          </td>
+                                         </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="grid-body">
+                                <table class="datagrid-btable" id="jltable">
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <p>&nbsp;</p>
+                        <div>
+                            <div class="col-md-6">
+                                <p align="center"><button id="jilurefresh"  class="btn btn--lg btn--blue" onclick="jlrefresh()">刷新</button></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p align="center"><a class="btn btn--lg btn--blue" href="main/statistic" target="_blank">生成行为报表</a></p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+          </div>
+
+          <div class="slide" id="5">
+              <div class="content fourth-content">
+                <div class="container-fluid">
+                    <div class="data-grid">
+                        <div class="data-view">
+                            <div class="grid-head">
+                                <div class="grid-head-inner">
+                                    <table class="data-table">
+                                        <tbody>
+                                         <tr class="data-table-row">
+                                         <td>
+                                             <div class="datagrid-cell cell-c6">
+                                                <div>日期</div>
+                                             </div>
+                                         </td>
+
+                                         <td>
+                                            <div class="datagrid-cell cell-c6">
+                                                <div>原因</div>
+                                            </div>
+                                         </td>
+                                         <td>
+                                              <div class="datagrid-cell cell-c6">
+                                                 <div>处理情况</div>
+                                              </div>
+                                         </td>
+                                         <td>
+                                             <div class="datagrid-cell cell-c6">
+                                                <div>事件</div>
+                                             </div>
+                                         </td>
+                                         </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="grid-body">
+                                <table class="datagrid-btable" id="xxtable">
+
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <p>&nbsp;</p>
+                    <p align="center"><button id="xiaoxirefresh"  class="btn btn--lg btn--blue" onclick="xxrefresh()">刷新</button></p>
+                </div>
+              </div>
+          </div>
+        </div>
+
+
+
+        <script type="text/javascript">
+        $(document).ready(function() {
+
+            // navigation click actions
+            $('.scroll-link').on('click', function(event){
+                event.preventDefault();
+                var sectionID = $(this).attr("data-id");
+                scrollToID('#' + sectionID, 750);
+            });
+            // scroll to top action
+            $('.scroll-top').on('click', function(event) {
+                event.preventDefault();
+                $('html, body').animate({scrollTop:0}, 'slow');
+            });
+            // mobile nav toggle
+            $('#nav-toggle').on('click', function (event) {
+                event.preventDefault();
+                $('#main-nav').toggleClass("open");
+            });
+        });
+        // scroll function
+        function scrollToID(id, speed){
+            var offSet = 0;
+            var targetOffset = $(id).offset().top - offSet;
+            var mainNav = $('#main-nav');
+            $('html,body').animate({scrollTop:targetOffset}, speed);
+            if (mainNav.hasClass("open")) {
+                mainNav.css("height", "1px").removeClass("in").addClass("collapse");
+                mainNav.removeClass("open");
+            }
+        }
+        if (typeof console === "undefined") {
+            console = {
+                log: function() { }
+            };
+        }
+        </script>
+    </body>
+
+
+</html>

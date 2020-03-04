@@ -1,0 +1,148 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600&subset=latin-ext");
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html, body {
+  font-family: 'Raleway', sans-serif;
+  font-size: 16px;
+}
+
+@media screen and (max-width: 768px) {
+  html, body {
+    font-size: 12px;
+  }
+}
+.container1 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.button {
+  text-decoration: none;
+  font-size: .875rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  display: inline-block;
+  border-radius: 1.5rem;
+  background-color: #fff;
+  color: #9191E9;
+  padding: 1rem 2rem;
+}
+
+.popup {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 2;
+  visibility: hidden;
+  opacity: 0;
+  overflow: hiden;
+  -webkit-transition: .64s ease-in-out;
+  transition: .64s ease-in-out;
+}
+.popup-inner {
+  position: relative;
+  bottom: -100vw;
+  right: -100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  max-width: 900px;
+  max-height: 600px;
+  width: 60%;
+  height: 80%;
+  background-color: #fff;
+  -webkit-transform: rotate(32deg);
+          transform: rotate(32deg);
+  -webkit-transition: .64s ease-in-out;
+  transition: .64s ease-in-out;
+}
+.popup__photo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  width: 40%;
+  height: 100%;
+  overflow: hidden;
+}
+.popup__photo img {
+  width: auto;
+  height: 100%;
+}
+.popup__text {
+  width: 60%;
+  height: 100%;
+  padding: 4rem;
+  border: black;
+}
+.popup__text h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  color: #0A0A0A;
+}
+.popup__text p {
+  font-size: .975rem !important;
+  color: #686868;
+  line-height: 1.5;
+}
+.popup:target {
+  visibility: visible;
+  opacity: 1;
+}
+.popup:target .popup-inner {
+  bottom: 0;
+  right: 0;
+  -webkit-transform: rotate(0);
+          transform: rotate(0);
+}
+.popup__close {
+  position: absolute;
+  right: -1rem;
+  top: -1rem;
+  width: 3rem;
+  height: 3rem;
+  font-size: .875rem;
+  font-weight: 300;
+  border-radius: 100%;
+  background-color: #0A0A0A;
+  z-index: 4;
+  color: #fff;
+  line-height: 3rem;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+}

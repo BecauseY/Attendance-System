@@ -1,0 +1,256 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>消息列表</title>
+    <style>
+        #section {
+            margin-top:10px;
+            margin-left:100px;
+            margin-right:100px;
+            border:0px solid #000;
+            }
+    </style>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static',filename='js/pagination.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/pagination2.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/pagination3.js') }}"></script>
+    <script type="text/javascript">
+        //全局变量
+        var numCount;       //数据总数量
+        var columnsCounts;  //数据列数量
+        var pageCount;      //每页显示的数量
+        var pageNum;        //总页数
+        var currPageNum ;   //当前页数
+        //页面标签变量
+        var blockTable;
+        var preSpan;
+        var firstSpan;
+        var nextSpan;
+        var lastSpan;
+        var pageNumSpan;
+        var currPageSpan;
+        $(document).ready(function(){
+            //页面标签变量
+            blockTable = document.getElementById("blocks1");
+            preSpan = document.getElementById("spanPre");
+            firstSpan = document.getElementById("spanFirst");
+            nextSpan = document.getElementById("spanNext");
+            lastSpan = document.getElementById("spanLast");
+            pageNumSpan = document.getElementById("spanTotalPage");
+            currPageSpan = document.getElementById("spanPageNum");
+            numCount = document.getElementById("blocks1").rows.length - 1;       //取table的行数作为数据总数量（减去标题行1）
+            columnsCounts = blockTable.rows[0].cells.length;
+            pageCount = 5;
+            pageNum = parseInt(numCount/pageCount);
+            if(0 != numCount%pageCount){
+                pageNum += 1;
+            }
+            firstPage();
+        });
+    </script>
+    <script type="text/javascript">
+        //全局变量
+        var numCount2;       //数据总数量
+        var columnsCounts2;  //数据列数量
+        var pageCount2;      //每页显示的数量
+        var pageNum2;        //总页数
+        var currPageNum2 ;   //当前页数
+        //页面标签变量
+        var blockTable2;
+        var preSpan2;
+        var firstSpan2;
+        var nextSpan2;
+        var lastSpan2;
+        var pageNumSpan2;
+        var currPageSpan2;
+        $(document).ready(function(){
+            //页面标签变量
+            blockTable2 = document.getElementById("blocks2");
+            preSpan2 = document.getElementById("spanPre2");
+            firstSpan2 = document.getElementById("spanFirst2");
+            nextSpan2 = document.getElementById("spanNext2");
+            lastSpan2 = document.getElementById("spanLast2");
+            pageNumSpan2 = document.getElementById("spanTotalPage2");
+            currPageSpan2 = document.getElementById("spanPageNum2");
+            numCount2 = document.getElementById("blocks2").rows.length - 1;       //取table的行数作为数据总数量（减去标题行1）
+            columnsCounts2 = blockTable2.rows[0].cells.length;
+            pageCount2 = 5;
+            pageNum2 = parseInt(numCount2/pageCount2);
+            if(0 != numCount2%pageCount2){
+                pageNum2 += 1;
+            }
+            firstPage2();
+        });
+    </script>
+    <script type="text/javascript">
+        //全局变量
+        var numCount3;       //数据总数量
+        var columnsCounts3;  //数据列数量
+        var pageCount3;      //每页显示的数量
+        var pageNum3;        //总页数
+        var currPageNum3 ;   //当前页数
+        //页面标签变量
+        var blockTable3;
+        var preSpan3;
+        var firstSpan3;
+        var nextSpan3;
+        var lastSpan3;
+        var pageNumSpan3;
+        var currPageSpan3;
+        $(document).ready(function(){
+            //页面标签变量
+            blockTable3 = document.getElementById("blocks3");
+            preSpan3 = document.getElementById("spanPre3");
+            firstSpan3 = document.getElementById("spanFirst3");
+            nextSpan3 = document.getElementById("spanNext3");
+            lastSpan3 = document.getElementById("spanLast3");
+            pageNumSpan3 = document.getElementById("spanTotalPage3");
+            currPageSpan3 = document.getElementById("spanPageNum3");
+            numCount3 = document.getElementById("blocks3").rows.length - 1;       //取table的行数作为数据总数量（减去标题行1）
+            columnsCounts3 = blockTable3.rows[0].cells.length;
+            pageCount3 = 5;
+            pageNum3 = parseInt(numCount3/pageCount3);
+            if(0 != numCount3%pageCount3){
+                pageNum3 += 1;
+            }
+            firstPage3();
+        });
+    </script>
+</head>
+<body background="{{ url_for('static',filename='images/background1.jpg') }}">
+        <!--出差申请表单-->
+        <div>
+            <h1 style="font-family:arial;font-size:20px;">出差申请:</h1><br>
+			<div align="center" id="section" style="overflow-x:auto; height:200px">
+			<form method="post" name="messagelist"  action="/admin/messagelist/business">
+            <table border="1" id="blocks1">
+                <thead>
+                    <tr bgcolor="#D1EEEE">
+                        <td style="text-align:center; font-weight:bold;">id</td>
+                        <td style="text-align:center; font-weight:bold;">姓名</td>
+                        <td style="text-align:center; font-weight:bold;">工号</td>
+                        <td style="text-align:center; font-weight:bold;">日期</td>
+                        <td style="text-align:center; font-weight:bold;">理由</td>
+                        <td style="text-align:center; font-weight:bold;">操作</td>
+                    </tr>
+                </thead>
+                {% for i in u1 %}
+                <tbody id="tb">
+                        <td style="text-align:center;"> {{ i[0] }} </td>
+                        <td style="text-align:center;"> {{ i[1] }} </td>
+                        <td style="text-align:center;"> {{ i[2] }} </td>
+                        <td style="text-align:center;"> {{ i[3] }} </td>
+                        <td style="text-align:center;"> {{ i[4] }} </td>
+                        {% if i[5] == '未处理' %}
+                        <td style="text-align:center;"> &nbsp&nbsp&nbsp&nbsp
+                            <input name={{ i[0] }} value="agree" type="submit" >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                            <input name={{ i[0] }} value="refuse" type="submit" >
+                            &nbsp&nbsp&nbsp&nbsp</td>
+                        {% else %}
+                        <td style="text-align:center;  ">{{ i[5] }}</td>
+                        {% endif %}
+                </tbody>
+                {% endfor %}
+            </table>
+			</form>
+			</div>
+			<div id="pagiDiv" align="center" style="width:1200px">
+				<span id="spanFirst">First</span>
+				<span id="spanPre">Pre</span>
+				<span id="spanNext">Next</span>
+				<span id="spanLast">Last</span>
+				The <span id="spanPageNum"></span> Page/Total <span id="spanTotalPage"></span> Page
+			</div>
+        </div>
+
+        <!--补签申请表单-->
+        <div>
+            <h1 style="font-family:arial;font-size:20px;">补签申请:</h1><br>
+			<div align="center" id="section" style="overflow-x:auto; height:200px">
+            <form method="post" name="messagelist"  action="/admin/messagelist/retroactive">
+            <table border="1" id="blocks2">
+                 <thead>
+                      <tr bgcolor="#D1EEEE">
+                                <td style="text-align:center; font-weight:bold;">id</td>
+                                <td style="text-align:center; font-weight:bold;">姓名</td>
+                                <td style="text-align:center; font-weight:bold;">工号</td>
+                                <td style="text-align:center; font-weight:bold;">日期</td>
+                                <td style="text-align:center; font-weight:bold;">理由</td>
+                                <td style="text-align:center; font-weight:bold;">操作</td>
+                       </tr>
+                  </thead>
+                {% for i in u2 %}
+                <tbody id="tb">
+                        <td style="text-align:center;"> {{ i[0] }} </td>
+                        <td style="text-align:center;"> {{ i[1] }} </td>
+                        <td style="text-align:center;"> {{ i[2] }} </td>
+                        <td style="text-align:center;"> {{ i[3] }} </td>
+                        <td style="text-align:center;"> {{ i[4] }} </td>
+                        {% if i[5] == '未处理' %}
+                        <td style="text-align:center;"> &nbsp&nbsp&nbsp&nbsp
+                            <input name={{ i[0] }} value="agree" type="submit" >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                            <input name={{ i[0] }} value="refuse" type="submit" >
+                            &nbsp&nbsp&nbsp&nbsp</td>
+                        {% else %}
+                        <td style="text-align:center;">{{ i[5] }}</td>
+                        {% endif %}
+                </tbody>
+                {% endfor %}
+            </table>
+            </div>
+            </form>
+			<div id="pagiDiv2" align="center" style="width:1200px">
+				<span id="spanFirst2">First</span>
+				<span id="spanPre2">Pre</span>
+				<span id="spanNext2">Next</span>
+				<span id="spanLast2">Last</span>
+				The <span id="spanPageNum2"></span> Page/Total <span id="spanTotalPage2"></span> Page
+			</div>
+        </div>
+
+        <!--请假申请表单-->
+        <div>
+            <h1 style="font-family:arial;font-size:20px;">请假申请:</h1><br>
+			<div align="center" id="section" style="overflow-x:auto; height:200px">
+            <form method="post" name="messagelist"  action="/admin/messagelist/dayoff">
+            <table border="1" id="blocks3">
+                 <thead>
+                      <tr bgcolor="#D1EEEE">
+                                <td style="text-align:center; font-weight:bold;">id</td>
+                                <td style="text-align:center; font-weight:bold;">姓名</td>
+                                <td style="text-align:center; font-weight:bold;">工号</td>
+                                <td style="text-align:center; font-weight:bold;">日期</td>
+                                <td style="text-align:center; font-weight:bold;">理由</td>
+                                <td style="text-align:center; font-weight:bold;">操作</td>
+                       </tr>
+                  </thead>
+                {% for i in u3 %}
+                <tbody id="tb">
+                        <td style="text-align:center;"> {{ i[0] }} </td>
+                        <td style="text-align:center;"> {{ i[1] }} </td>
+                        <td style="text-align:center;"> {{ i[2] }} </td>
+                        <td style="text-align:center;"> {{ i[3] }} </td>
+                        <td style="text-align:center;"> {{ i[4] }} </td>
+                        {% if i[5] == '未处理' %}
+                        <td style="text-align:center;"> &nbsp&nbsp&nbsp&nbsp
+                            <input name={{ i[0] }} value="agree" type="submit" >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                            <input name={{ i[0] }} value="refuse" type="submit" >
+                            &nbsp&nbsp&nbsp&nbsp</td>
+                        {% else %}
+                        <td style="text-align:center;">{{ i[5] }}</td>
+                        {% endif %}
+                </tbody>
+                {% endfor %}
+            </table>
+            </div>
+            </form>
+			<div id="pagiDiv3" align="center" style="width:1200px">
+				<span id="spanFirst3">First</span>
+				<span id="spanPre3">Pre</span>
+				<span id="spanNext3">Next</span>
+				<span id="spanLast3">Last</span>
+				The <span id="spanPageNum3"></span> Page/Total <span id="spanTotalPage3"></span> Page
+			</div>
+        </div>
+</body>
+</html>

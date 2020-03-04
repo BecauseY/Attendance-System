@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+    <meta charset="UTF-8">
+    <meta charset="gb2312">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生成用户行为列表</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/reset.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/style2.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/main.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/0001245c2.css') }}">
+</head>
+
+<body>
+
+<div id="e_background">
+	<div id="e_smallstars"></div>
+	<div id="e_moon"></div>
+</div>
+
+
+<div class="container1">
+    <a class="button" href="#popup" >查看您的月度工作报告</a>
+    <div class="popup" id="popup">
+        <div class="popup-inner">
+            <div class="popup__photo">
+                <img src="{{ url_for('static', filename = 'img/bg1.png') }}" alt="">
+            </div>
+            <div class="popup__text">
+                <table>
+                    <tbody>
+                    {% for i in u %}
+                    <tr>
+                        <p style=border-style:double>在{{i[0]}}月中，你签到了{{i[1]}}次，其中正常记录有{{i[2]}}条，早退{{i[3]}}次，迟到{{i[4]}}次，在一天中既早退又迟到{{i[5]}}次，守纪律签到占比{{i[6]}}</p>
+                        <br>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

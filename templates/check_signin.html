@@ -1,0 +1,114 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>查看签到情况</title>
+    <style>
+        #section {
+            margin-top:100px;
+            #margin-left:100px;
+            #margin-right:100px;
+            border:0px solid #000;
+            }
+    </style>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static',filename='js/pagination.js') }}"></script>
+    <script type="text/javascript">
+        //全局变量
+        var numCount;       //数据总数量
+        var columnsCounts;  //数据列数量
+        var pageCount;      //每页显示的数量
+        var pageNum;        //总页数
+        var currPageNum ;   //当前页数
+        //页面标签变量
+        var blockTable;
+        var preSpan;
+        var firstSpan;
+        var nextSpan;
+        var lastSpan;
+        var pageNumSpan;
+        var currPageSpan;
+        $(document).ready(function(){
+            //页面标签变量
+            blockTable = document.getElementById("blocks1");
+            preSpan = document.getElementById("spanPre");
+            firstSpan = document.getElementById("spanFirst");
+            nextSpan = document.getElementById("spanNext");
+            lastSpan = document.getElementById("spanLast");
+            pageNumSpan = document.getElementById("spanTotalPage");
+            currPageSpan = document.getElementById("spanPageNum");
+            numCount = document.getElementById("blocks1").rows.length - 1;       //取table的行数作为数据总数量（减去标题行1）
+            columnsCounts = blockTable.rows[0].cells.length;
+            pageCount = 5;
+            pageNum = parseInt(numCount/pageCount);
+            if(0 != numCount%pageCount){
+                pageNum += 1;
+            }
+            firstPage();
+        });
+    </script>
+</head>
+<body background="{{ url_for('static',filename='images/background1.jpg') }}">
+<div>
+    <div id="section"  style="overflow-x:auto; height:200px" > <!--设置滚动条-->
+        <form id="check" method="post" name="checksignin"  action="/admin/checksignin/">
+            <div align="center">
+                查询日期：&nbsp&nbsp<input type="date" name="date"/>
+                <input type="submit" value="查询" style="display:inline-block;" id="submit1">
+            </div>
+        <table border="1" align="center" id="blocks1">
+            <thead>
+                <tr bgcolor="#D1EEEE">
+                    <td style="text-align:center; font-weight:bold; width="100px"">姓名</td>
+                    <td style="text-align:center; font-weight:bold; width="100px"">工号</td>
+					<td style="text-align:center; font-weight:bold; width="100px"">日期</td>
+                    <td style="text-align:center; font-weight:bold; width="100px"">签到时间</td>
+                    <td style="text-align:center; font-weight:bold; width="100px"">是否迟到</td>
+                    <td style="text-align:center; font-weight:bold; width="100px"">签退时间</td>
+                    <td style="text-align:center; font-weight:bold; width="100px"">是否早退</td>
+                </tr>
+            </thead>
+            {% for i in u %}
+            <tbody>
+					<td style="text-align:center; width="100px"; height="25px""> {{ i[0] }} </td>
+                    <td style="text-align:center; width="100px"; height="25px""> {{ i[1] }} </td>
+                    <td style="text-align:center; width="100px"; height="25px""> {{ i[2] }} </td>
+                    {% if i[3]=="未签到" %}
+                    <td style="text-align:center; width="400px"; height="25px"; colspan="4""> 未签到 </td>
+                    {% elif i[3]=="请假" %}
+                    <td style="text-align:center; width="400px"; height="25px"; colspan="4""> 请假 </td>
+                    {% elif i[3]=="出差" %}
+                    <td style="text-align:center; width="400px"; height="25px"; colspan="4""> 出差 </td>
+                    {% else %}
+                        <td style="text-align:center; width="100px"; height="25px""> {{ i[3] }} </td>
+                        {% if i[3]<i[5] %}
+                        <td style="text-align:center; width="100px"; height="25px""> 未迟到 </td>
+                        {% else %}
+                        <td style="text-align:center; width="100px"; height="25px""> 迟到 </td>
+                        {% endif %}
+
+                        {% if i[4]=="未签退" %}
+                        <td style="text-align:center; width="100px"; height="25px"; colspan="2""> 未签退 </td>
+                        {% else %}
+                            <td style="text-align:center; width="100px"; height="25px""> {{ i[4] }} </td>
+                            {% if i[4]>i[6] %}
+                            <td style="text-align:center; width="100px"; height="25px""> 未早退 </td>
+                            {% else %}
+                            <td style="text-align:center; width="100px"; height="25px""> 早退 </td>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+            </tbody>
+            {% endfor %}
+        </table>
+        </form>
+    </div>
+    <div id="pagiDiv" align="center" style="width:1200px">
+				<span id="spanFirst">First</span>
+				<span id="spanPre">Pre</span>
+				<span id="spanNext">Next</span>
+				<span id="spanLast">Last</span>
+				The <span id="spanPageNum"></span> Page/Total <span id="spanTotalPage"></span> Page
+    </div>
+</div>
+</body>
+</html>
